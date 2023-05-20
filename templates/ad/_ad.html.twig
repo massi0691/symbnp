@@ -21,6 +21,9 @@
             </p>
             <a href="{{ url }}" class="btn btn-secondary">En savoir plus
                 !</a>
+            {% if app.user is same as ad.author %}
+                <a href="{{ path('ads_edit',{'slug':ad.slug}) }}" class="btn btn-secondary">Editer !</a>
+            {% endif %}
         </div>
     </div>
 </div>
