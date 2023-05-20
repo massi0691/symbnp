@@ -34,6 +34,7 @@ class AdController extends AbstractController
     public function create(Request $request, EntityManagerInterface $em): Response
     {
         $ad = new Ad();
+        $ad->setAuthor($this->getUser());
         $form = $this->createForm(AdType::class, $ad);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
