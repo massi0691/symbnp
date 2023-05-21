@@ -27,3 +27,8 @@ div.carousel-caption{
     max-width: 50px;
     min-height: 50px;
 }
+
+.datepicker table tr td.disabled, .datepicker table tr td.disabled:hover {
+    color: white !important;
+    background: rgba(255, 0, 8, 0.45) !important;
+}

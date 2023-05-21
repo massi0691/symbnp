@@ -75,9 +75,15 @@ class Ad
      */
     private $author;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="ad")
+     */
+    private $bookings;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
+        $this->bookings = new ArrayCollection();
     }
 
     /**
@@ -91,6 +97,26 @@ class Ad
             $slugify= new Slugify;
             $this->slug = $slugify->slugify($this->title);
         }
+    }
+
+    /**
+     * to have an array of days that you can't check
+     * @return array an array object of days not available
+     */
+    public function getNotAvailableDays() :array
+    {
+        $notAvailableDays =[];
+        foreach ($this->bookings as $booking ){
+            $startDate=$booking->getStartDate()->getTimestamp();
+            $endDate = $booking->getEndDate()->getTimestamp();
+            $result=range($startDate,$endDate,24*60*60);
+
+            $days = array_map(function ($dayTimestamp){
+                return date('Y-m-d',$dayTimestamp);
+            },$result);
+            $notAvailableDays = array_merge($notAvailableDays,$days);
+        }
+        return  $notAvailableDays;
     }
 
     public function getId(): ?int
@@ -220,6 +246,36 @@ class Ad
     public function setAuthor(?User $author): self
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Booking>
+     */
+    public function getBookings(): Collection
+    {
+        return $this->bookings;
+    }
+
+    public function addBooking(Booking $booking): self
+    {
+        if (!$this->bookings->contains($booking)) {
+            $this->bookings[] = $booking;
+            $booking->setAd($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBooking(Booking $booking): self
+    {
+        if ($this->bookings->removeElement($booking)) {
+            // set the owning side to null (unless already changed)
+            if ($booking->getAd() === $this) {
+                $booking->setAd(null);
+            }
+        }
 
         return $this;
     }
