@@ -9,13 +9,14 @@
             <h1>{{ ad.title }}</h1>
             <p>{{ ad.introduction }}</p>
             <p class="h2">
-                <strong>{{ ad.rooms }}</strong> chambres pour <strong>{{ ad.price }} €</strong>
+                <strong>{{ ad.rooms }}</strong> chambres pour <strong>{{ ad.price | number_format(2,',',' ') }} €</strong>
                 par nuit
             </p>
             <a href="{{ path('booking_create',{'slug':ad.slug}) }}" class="btn btn-primary">Réserver !</a>
             {% if app.user is same as ad.author %}
                 <a href="{{ path('ads_edit',{'slug':ad.slug}) }}" class="btn btn-secondary">Editer !</a>
-                <a href="{{ path('ads_delete',{'slug':ad.slug}) }}" class="btn btn-danger" onclick=" return confirm(`ètes vous sur de vouloir supprimer l'annonce:  {{ ad.title}} ? `)">
+                <a href="{{ path('ads_delete',{'slug':ad.slug}) }}" class="btn btn-danger"
+                   onclick=" return confirm(`ètes vous sur de vouloir supprimer l'annonce:  {{ ad.title }} ? `)">
                     Supprimer!
                 </a>
             {% endif %}
@@ -28,8 +29,9 @@
                 <div id="carouselExampleIndicators" class="carousel slide">
                     <div class="carousel-indicators">
                         {% for image in ad.images %}
-                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ loop.index0 }}"
-                                    {% if loop.first %} class="active" {% endif%} aria-current="true"
+                            <button type="button" data-bs-target="#carouselExampleIndicators"
+                                    data-bs-slide-to="{{ loop.index0 }}"
+                                    {% if loop.first %} class="active" {% endif %} aria-current="true"
                                     aria-label="Slide {{ loop.index0 }}">
                             </button>
                         {% endfor %}
@@ -56,19 +58,56 @@
                         <span class="visually-hidden">Next</span>
                     </button>
                 </div>
+
+                <hr>
+                {% if ad.comments | length > 0 %}
+                    <h2 class="mb-3">Commentaires de nos voyageurs : </h2>
+                    <div class="alert alert-info">
+                        <h4 class="alert-heading text-center">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    Note globale donnée par nos voyageurs
+                                </div>
+                                <div class="col">
+                                    {% include './partiels/rating.html.twig' with { 'rating' : ad.avgRatings } %}
+                                    <br>
+                                    <small class="h6"> (Calculée sur {{ ad.comments | length}} avis)</small>
+                                </div>
+                            </div>
+                        </h4>
+                    </div>
+
+
+                    {% for comment in ad.comments %}
+                        <div class="bg-light rounded mb-3 py-3 px-3">
+                            <strong>{{ comment.author.firstName }}</strong> a dit
+                            <blockquote>
+                                {{ comment.content }}
+                            </blockquote>
+                            <strong> Note donnée :</strong>
+
+                            {% include './partiels/rating.html.twig' with {'rating':comment.rating} %}
+
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <h2>Cette annonce n'a pas récu encore de commentaire ... </h2>
+                {% endif %}
+
             </div>
+
             <div class="col">
                 <div class="row">
                     <div class="col-3">
                         <a href="{{ path('user_show',{'slug':a.slug}) }}">
-                        <img src="{{ a.picture }}" class="avatar avatar-medium" alt="Avatar de {{ a.fullName}}">
+                            <img src="{{ a.picture }}" class="avatar avatar-medium" alt="Avatar de {{ a.fullName }}">
                         </a>
                     </div>
                     <div class="col">
                         <a href="{{ path('user_show',{'slug':a.slug}) }}" style="text-decoration: none">
-                            <h3>{{ a.fullName}} </h3>
+                            <h3>{{ a.fullName }} </h3>
                         </a>
-                        <span class="badge bg-primary" >{{ a.ads | length}} annonces</span>
+                        <span class="badge bg-primary">{{ a.ads | length }} annonces</span>
                     </div>
                 </div>
                 <p>{{ a.description | raw }}</p>

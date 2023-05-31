@@ -10,6 +10,12 @@ div.ad-title h1, div.ad-title p {
     color: white;
     text-shadow: 3px 3px 3px rgba(0,0,0,0.5);
 }
+div.ad-title .btn {
+    margin-top: 2em ;
+    font-size: 1.5em;
+    line-height: 1.5em;
+}
+
 div.carousel-caption{
     text-shadow: 3px 3px 3px rgba(0,0,0,0.5);
 }
@@ -24,11 +30,26 @@ div.carousel-caption{
     min-height: 85px;
 }
 .avatar-mini {
-    max-width: 50px;
-    min-height: 50px;
+    max-width: 30px;
+    min-height: 30px;
+}
+.avatar-micro {
+    max-width: 22px;
+    min-height: 22px;
 }
 
 .datepicker table tr td.disabled, .datepicker table tr td.disabled:hover {
     color: white !important;
     background: rgba(255, 0, 8, 0.45) !important;
+}
+
+.rating i {
+    color: goldenrod;
+}
+
+.alert a {
+    text-decoration: none;
+}
+.alert .btn {
+    color: white;
 }
