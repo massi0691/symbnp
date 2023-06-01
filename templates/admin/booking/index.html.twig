@@ -19,21 +19,24 @@
             </tr>
             </thead>
             <tbody>
-            {% for booking in bookings  %}
+            {% for booking in pagination.data %}
                 <tr>
                     <td>{{ booking.id }}</td>
                     <td> {{ booking.createdAt | date('d/m/y H:i') }}</td>
                     <td>
-                        <img src=" {{ booking.booker.picture}}" alt="{{ booking.booker.fullName }}" class="avatar-micro rounded-circle">
+                        <img src=" {{ booking.booker.picture }}" alt="{{ booking.booker.fullName }}"
+                             class="avatar-micro rounded-circle">
                         {{ booking.booker.fullName }}
                     </td>
                     <td>{{ booking.ad.title }}</td>
                     <td>{{ booking.amount }}</td>
                     <td>
-                        <a href="{{ path('admin_booking_edit',{'id': booking.id}) }}" class="btn btn-primary rounded-2 btn-sm mt-1">
+                        <a href="{{ path('admin_booking_edit',{'id': booking.id}) }}"
+                           class="btn btn-primary rounded-2 btn-sm mt-1">
                             <i class="fa-solid fa-pen fa-xs"></i>
                         </a>
-                        <a href="{{ path('admin_booking_delete',{'id':booking.id}) }}" class="btn btn-danger rounded-2 mt-1 btn-sm">
+                        <a href="{{ path('admin_booking_delete',{'id':booking.id}) }}"
+                           class="btn btn-danger rounded-2 mt-1 btn-sm">
                             <i class="fa-solid fa-trash fa-xs"></i>
                         </a>
                     </td>
@@ -42,7 +45,7 @@
 
             </tbody>
         </table>
-
+        {{ pagination.display }}
 
     </div>
 {% endblock %}

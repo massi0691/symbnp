@@ -18,7 +18,7 @@
             </tr>
             </thead>
             <tbody>
-            {% for comment in comments %}
+            {% for comment in pagination.data %}
                 <tr>
                     <td>{{ comment.id }}</td>
                     <td>{{ comment.createdAt | date('d-m-Y-H-i') }}</td>
@@ -33,11 +33,13 @@
                     </td>
                     <td> {{ comment.ad.title }}</td>
                     <td class="text-center">
-                        <a href="{{ path('admin_comment_edit',{'id':comment.id}) }}" class="btn btn-primary btn-sm rounded-3">
+                        <a href="{{ path('admin_comment_edit',{'id':comment.id}) }}"
+                           class="btn btn-primary btn-sm rounded-3">
                             <i class="fa-solid fa-pen fa-sm"></i>
                         </a>
                         <br>
-                        <a href="{{ path('admin_comments_delete',{'id':comment.id})}}" class="btn btn-danger btn-sm rounded-3 mt-1">
+                        <a href="{{ path('admin_comments_delete',{'id':comment.id}) }}"
+                           class="btn btn-danger btn-sm rounded-3 mt-1">
                             <i class="fa-solid fa-trash fa-sm"></i>
                         </a>
                     </td>
@@ -47,7 +49,7 @@
             </tbody>
 
         </table>
-
+        {{ pagination.display }}
 
     </div>
 {% endblock %}
