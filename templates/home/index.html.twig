@@ -25,104 +25,31 @@
 
         <h2 class="h1 my-5">Nos appartements stars</h2>
         <div class="row">
-            <div class="col-md-4">
-                <div class="card bg-light mb-3">
-                    <div class="card-header text-center">
-                        3 chambres, <strong>49 € / nuit</strong> <br>
-                        <small>Pas encore noté</small>
-                    </div>
-                    <img src="https://placehold.it/1000x400" alt="Image de l'appartement"
-                         style="height: 200px; width: 100%; display: block"
-                    >
-                    <div class="car-body p-3">
-                        <h4 class="card-title">
-                            Appartement de ouf!
-                        </h4>
-                        <p class="card-text">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                            Assumenda inventore labore
-                            magni nulla quae, quasi quidem ratione repellat repellendus veniam.
-                        </p>
-                        <a href="#" class="btn btn-secondary">En savoir plus !</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card bg-light mb-3">
-                    <div class="card-header text-center">
-                        3 chambres, <strong>49 € / nuit</strong> <br>
-                        <small>Pas encore noté</small>
-                    </div>
-                    <img src="https://placehold.it/1000x400" alt="Image de l'appartement"
-                         style="height: 200px; width: 100%; display: block"
-                    >
-                    <div class="car-body p-3">
-                        <h4 class="card-title">
-                            Appartement de ouf!
-                        </h4>
-                        <p class="card-text">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                            Assumenda inventore labore
-                            magni nulla quae, quasi quidem ratione repellat repellendus veniam.
-                        </p>
-                        <a href="#" class="btn btn-secondary">En savoir plus !</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card bg-light mb-3">
-                    <div class="card-header text-center">
-                        3 chambres, <strong>49 € / nuit</strong> <br>
-                        <small>Pas encore noté</small>
-                    </div>
-                    <img src="https://placehold.it/1000x400" alt="Image de l'appartement"
-                         style="height: 200px; width: 100%; display: block"
-                    >
-                    <div class="car-body p-3">
-                        <h4 class="card-title">
-                            Appartement de ouf!
-                        </h4>
-                        <p class="card-text">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                            Assumenda inventore labore
-                            magni nulla quae, quasi quidem ratione repellat repellendus veniam.
-                        </p>
-                        <a href="#" class="btn btn-secondary">En savoir plus !</a>
-                    </div>
-                </div>
-            </div>
+            {% for data in ads %}
+                {% include 'ad/_ad.html.twig' with {'ad':data.annonce} %}
+            {% endfor %}
         </div>
         <h2 class="h1 my-5">Nos propriétaires stars !</h2>
         <div class="row">
-            <div class="col">
-                <div class="card border-secondary mb-3">
-                    <div class="card-body">
-                        <h4 class="card-title">Massinissa AIT SALAH</h4>
-                        <hr>
-                        <div class="card-text">
-                            <img src="https://placehold.it/64x64" alt="Avatar de Massinissa AIT SALAH"
-                                 class="float-start me-3">
-                            <p style="margin-right: 5px">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                Fugiat, quia?</p>
-                            <a href="" class="btn btn-success float-end">En savoir plus!</a>
+            {% for data in users %}
+                {% set user = data.user %}
+                <div class="col">
+                    <div class="card border-secondary mb-3">
+                        <div class="card-body">
+                            <h4 class="card-title">{{ user.firstName }} {{ user.lastName }}</h4>
+                            <hr>
+                            <div class="card-text">
+                                <img src="{{ user.picture }}"
+                                     alt="Avatar de {{ user.firstName }} {{ user.lastName }}"
+                                     class="float-start me-3">
+                                <p style="margin-right: 5px"> {{ user.introduction }}</p>
+                                <a href="{{ path('user_show',{"slug":user.slug}) }}"
+                                   class="btn btn-success float-end">En savoir plus!</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col">
-                <div class="card border-secondary mb-3">
-                    <div class="card-body">
-                        <h4 class="card-title">Massinissa AIT SALAH</h4>
-                        <hr>
-                        <div class="card-text">
-                            <img src="https://placehold.it/64x64" alt="Avatar de Massinissa AIT SALAH"
-                                 class="float-start me-3">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat, quia?</p>
-                            <a href="" class="btn btn-success float-end">En savoir plus!</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 

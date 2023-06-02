@@ -3,10 +3,7 @@
 {% block title %}Réserver l'annonce : {{ ad.title }} {% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css"
-          integrity="sha512-34s5cpvaNG3BknEWSuOncX28vz97bRI59UnVtEEpFX536A7BtZSJHsDyFoCl8S7Dt2TPzcrCEoHBGeM4SUBDBw=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    {{ encore_entry_link_tags('app') }}
 {% endblock %}
 
 {% block body %}
@@ -29,7 +26,7 @@
                 </div>
             </div>
             <h4 class="mt-2">Montant de séjour : <span id="amount">...</span> € </h4>
-            <span class="days">0</span> nuit(s) a {{ ad.price | number_format(2, ',', ' ')  }} € par nuit
+            <span class="days">0</span> nuit(s) a {{ ad.price | number_format(2, ',', ' ') }} € par nuit
             <h4 class="mt-3">Vous avez un commentaire ?</h4>
             {{ form_row(form.comment) }}
             <h2>Vous avez terminé !</h2>
@@ -45,9 +42,9 @@
 
 {% endblock %}
 {% block javascripts %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js"
-            integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    {{ encore_entry_script_tags('app') }}
+
     <script>
         $(document).ready(() => {
             $('#booking_startDate, #booking_endDate').datepicker({
@@ -64,22 +61,23 @@
 
 
         })
-      function calculateAmount() {
-        const endDate = new Date($('#booking_endDate').val().replace(/(\d+)\/(\d+)\/(\d{4})/,'$3/$2/$1'));
-        // 18/09/2018
-         // (\d+)\/(\d+)\/(\d{4})
-          //, '$3-$2-$1'
-        // 2018-09-18
-        const startDate = new Date($('#booking_startDate').val().replace(/(\d+)\/(\d+)\/(\d{4})/,'$3/$2/$1'));
-        if(startDate && endDate && startDate < endDate){
-            const DAY_TIME = 1000 * 60 * 60 * 24
-            const diff =endDate.getTime() - startDate.getTime();
-            const days = diff / DAY_TIME ;
-            const amount = days *  {{ ad.price }};
-            $('.days').text(days);
-            $('#amount').text(amount.toLocaleString('fr-FR'));
+
+        function calculateAmount() {
+            const endDate = new Date($('#booking_endDate').val().replace(/(\d+)\/(\d+)\/(\d{4})/, '$3/$2/$1'));
+            // 18/09/2018
+            // (\d+)\/(\d+)\/(\d{4})
+            //, '$3-$2-$1'
+            // 2018-09-18
+            const startDate = new Date($('#booking_startDate').val().replace(/(\d+)\/(\d+)\/(\d{4})/, '$3/$2/$1'));
+            if (startDate && endDate && startDate < endDate) {
+                const DAY_TIME = 1000 * 60 * 60 * 24
+                const diff = endDate.getTime() - startDate.getTime();
+                const days = diff / DAY_TIME;
+                const amount = days *  {{ ad.price }};
+                $('.days').text(days);
+                $('#amount').text(amount.toLocaleString('fr-FR'));
+            }
         }
-      }
 
     </script>
 {% endblock %}
